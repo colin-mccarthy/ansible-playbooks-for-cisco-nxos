@@ -1,0 +1,17 @@
+
+
+interfaces:
+ port-channel47:
+   description: swcore1/2:Po9
+   admin_state: up
+   mode: trunk
+   channel_id: 47
+   members:
+     - Eth1/47
+     - Eth1/48
+   vpc: 47
+   vlans:
+     - 821
+     - 822
+     - 825
+     - 831
