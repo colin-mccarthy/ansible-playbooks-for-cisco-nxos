@@ -1,0 +1,13 @@
+---
+
+- hosts: nxos
+  connection: network_cli
+
+  tasks:
+  - name: show run
+    nxos_command:
+      commands:
+        - show run
+    register: content
+
+  - debug: var=content.stdout_lines
