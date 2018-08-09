@@ -1,14 +1,21 @@
+---
+
+- hosts: nxos
+  connection: network_cli
+  
+  tasks:
+  - name: obtain vars
+    include_vars: int_vars.yml  
 
 
-
-- name: configure physical interfaces
- connection: network_cli
- nxos_interface:
-   name: "{{ item.key }}"
-   description: "{{ item.value.description | default(omit) }}"
-   state: "{{ item.value.state | default('present') }}"
-   admin_state: "{{ item.value.admin_state | default('down' )}}"
-   mode: layer2
- with_dict: "{{ interfaces }}"
+  - name: configure physical interfaces
+    connection: network_cli
+    nxos_interface:
+      name: "{{ item.key }}"
+      description: "{{ item.value.description | default(omit) }}"
+      state: "{{ item.value.state | default('present') }}"
+      admin_state: "{{ item.value.admin_state | default('down' )}}"
+      mode: layer2
+    with_dict: "{{ interfaces }}"
  
  
