@@ -30,3 +30,5 @@
 # If you send multiple commands in one `nxos_command` task, then each result is stored as another list element. 
 # You should just have one `register: output` line, and then refer to each one with `output[0], output[1], output[2]`, etc.       
 #
+# my indentation above is wrong. You'll also need to check syntax for passing `output: json` to multiple commands in the one play)
+# But above pattern is along the right lines. When you dump `nxos_output`, you'll see it's an array with 3 items
