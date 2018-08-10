@@ -1,0 +1,30 @@
+---
+- hosts: nxos
+  gather_facts: false
+  connection: network_cli
+
+  tasks:
+    - name: show commands
+      nxos_command:
+        commands:
+        - command: show version
+          output: json
+        - command: show system resources
+          output: json
+        - command: show spanning-tree vlan 1
+          output: json
+
+
+      register: output
+
+    - name: show commands output
+      debug:
+        msg:
+          - "The hostname of this switch is {{ output.stdout[0].host_name }}"
+          - "The brand of this switch is {{ output.stdout[0].manufacturer }}"
+          - "The uptime of {{ output.stdout[0].host_name }} is {{ output.stdout[0].kern_uptm_days }} DAYS {{ output.stdout[0].kern_uptm_hrs }} HOURS {{ output.stdout[0].kern_uptm_mins }} MINUTES {{ output.stdout[0].kern_uptm_secs }} SECONDS"
+          - "The last restart reason for {{ output.stdout[0].host_name }} is {{ output.stdout[0].rr_reason }}"
+          - "Load average for CPU is 1 MIN ({{ output.stdout[1].load_avg_1min }}) 5 MIN ({{ output.stdout[1].load_avg_5min }}) 15 MIN ({{output.stdout[1].load_avg_15min }})"
+          - "Memory utilization for {{ output.stdout[0].host_name }} is TOTAL ({{ output.stdout[1].memory_usage_total }}) USED ({{ output.stdout[1].memory_usage_used }}) FREE ({{output.stdout
+[1].memory_usage_free }})"
+          - "{{ output.stdout[0].TABLE_tree.ROW_tree.topology_change_time_since_last }}"
