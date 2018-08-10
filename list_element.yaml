@@ -1,0 +1,32 @@
+---
+
+- hosts: nxos
+  connection: network_cli
+
+  tasks:
+   - name: Show Commands
+     nxos_command:
+       commands:
+         - show version
+         - show system resources
+         - show spanning-tree vlan 1
+       register: nxos_output
+
+   - name: Show Commands Output
+     debug:
+       msg: "{{ nxos_output[0] }}"
+       
+   - name: Show Commands Output
+     debug:
+       msg: "{{ nxos_output[1] }}"
+       
+   - name: Show Commands Output
+     debug:
+       msg: "{{ nxos_output[2] }}"     
+       
+       
+       
+       
+# If you send multiple commands in one `nxos_command` task, then each result is stored as another list element. 
+# You should just have one `register: output` line, and then refer to each one with `output[0], output[1], output[2]`, etc.       
+#
